@@ -1,0 +1,23 @@
+.container {
+    padding: 50px;
+}
+
+.navbar {
+    background-color: #C7E9B0 !important;
+}
+
+body {
+    background-color: #DDFFBB;
+}
+
+article {
+    margin-top: 30px;
+}
+
+.checked {
+    color: #B3C99C;
+}
+
+img {
+    width: 220px
+}

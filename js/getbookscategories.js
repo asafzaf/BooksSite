@@ -5,7 +5,7 @@ function showData(data) {
     for(const key in data.products) {
         const li = document.createElement('li');
 
-        sHtml = `<a class="dropdown-item" href="#">${data.products[key].name}</a>`;
+        sHtml = `<a class="dropdown-item" href="./index.php?category=${data.products[key].name}">${data.products[key].name}</a>`;
 
         li.innerHTML = sHtml;
 

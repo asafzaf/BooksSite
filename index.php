@@ -4,7 +4,6 @@
 
     session_start();//on logout session_destroy();
 
-    
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +39,13 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled">All</a>
+          <?php
+            if(!empty($_GET["category"])) {
+              echo '<a class="nav-link" href="./index.php" >All</a>';
+            } else {
+              echo '<a class="nav-link disabled">All</a>';
+            }
+          ?>
         </li>
       </ul>
       <form class="d-flex" role="search">
@@ -51,21 +56,30 @@
   </div>
 </nav>
 </header>
-<body>
+<body>  
     <div class="container">
+      <h1>
+        <?php
+          if(!empty($_GET["category"])) {
+            echo $_GET["category"] . " Books";
+          } else {
+            echo "All Books";
+          }
+        ?>
+      </h1>
         <div class="container text-center d-flex">
             <div class="row g-2">
                 <?php
-                    if(empty($_POST["category"])) {
+                    if(empty($_GET["category"])) {
                         $query = "SELECT * FROM tbl_93_books";
                 
                     }
                 
-                    if(!empty($_POST["category"])) { //true if form was submitted
-                
+                    if(!empty($_GET["category"])) { //true if form was submitted
+
                         $query  = "SELECT * FROM tbl_93_books WHERE category='" 
                 
-                        . $_POST["category"] 
+                        . $_GET["category"] 
                 
                         ."'";
         
@@ -79,12 +93,11 @@
                                 <div class="p-3">' . $row["name"] . " // " . $row["author_name"] . '</div>
                               </div>';
                             }
+                        } else {
+                          echo "No books in this category :(";
                         }
+
                 ?>
-              <div class="col-6">
-                <div class="p-3">Custom column padding</div>
-              </div>
-              
             </div>
           </div>
     </div>

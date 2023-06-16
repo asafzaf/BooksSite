@@ -78,7 +78,7 @@
                 
                     }
                 
-                    if(!empty($_GET["category"])) { //true if form was submitted
+                    if(!empty($_GET["category"])) {
 
                         $query  = "SELECT * FROM tbl_93_books WHERE category='" 
                 
@@ -103,9 +103,8 @@
 
                             }
                         } else {
-                          echo "No books found :(";
+                          echo '<div class="container d-flex justify-content-center"><div class="col"><img src="./images/no-education.png"><h3>No books found :(</h3></div></div>';
                         }
-
                 ?>
             </div>
           </div>

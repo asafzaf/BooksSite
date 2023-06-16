@@ -19,18 +19,15 @@
 <header>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#"><b>Asaf's Book Shop</b></a>
+    <a class="navbar-brand" href="./index.php"><b>Asaf's Book Shop</b></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="./index.php">Home</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li> -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Select Category
@@ -49,7 +46,7 @@
         </li>
       </ul>
       <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search For Book" aria-label="Search">
+        <input class="form-control me-2" type="search" name="value" placeholder="Search For Book" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
     </div>
@@ -62,6 +59,8 @@
         <?php
           if(!empty($_GET["category"])) {
             echo $_GET["category"] . " Books";
+          } else if(!empty($_GET["value"])) {
+            echo "Search Results for \"" . $_GET["value"] . '"';
           } else {
             echo "All Books";
           }
@@ -71,6 +70,10 @@
             <div class="row g-2">
                 <?php
                     if(empty($_GET["category"])) {
+
+                      if(!empty($_GET["value"])) {
+                        $query = "SELECT * FROM tbl_93_books WHERE name like \"%" . $_GET["value"] . "%\"";
+                      } else
                         $query = "SELECT * FROM tbl_93_books";
                 
                     }
@@ -89,12 +92,18 @@
                 
                         if($result->num_rows > 0) {
                             while($row = mysqli_fetch_array($result)) {
-                                echo '<div class="col-6">
-                                <div class="p-3">' . $row["name"] . " // " . $row["author_name"] . '</div>
-                              </div>';
+                              echo '<div class="card" style="width: 18rem;">
+                              <img src="' . $row["url"] . '" class="card-img-top" alt="' . $row["name"] . ' image">
+                              <div class="card-body">
+                                <h5 class="card-title">' . $row["name"] . '</h5>
+                                <p class="card-text">' . $row["desc"] . '</p>
+                                <a href="./item.php?id=' . $row["id"] . '" class="btn btn-primary">Go to book page</a>
+                              </div>
+                            </div>';
+
                             }
                         } else {
-                          echo "No books in this category :(";
+                          echo "No books found :(";
                         }
 
                 ?>
